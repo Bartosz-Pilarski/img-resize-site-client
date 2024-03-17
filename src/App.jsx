@@ -3,6 +3,7 @@ import { useState } from "react"
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null)
+  const [resultImage, setResultImage] = useState("/")
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -13,7 +14,7 @@ function App() {
 
     axios
       .post("http://localhost:3001/api/images", formData,  { headers: {'Content-Type': 'multipart/form-data'}})
-      .then(res => console.log(res.data))
+      .then(res => setResultImage(`http://localhost:3001/${res.data.url}`))
   }
 
   const handleImageSelection = (event) => {
@@ -28,7 +29,7 @@ function App() {
         <button type="submit">Upload</button>
       </form>
       {selectedImage 
-        ? (<> <h2> Preview </h2> <img src={URL.createObjectURL(selectedImage)} alt="user-uploaded image" /> <h2> Result </h2> <img src="" alt="result image" /> </>)
+        ? (<> <h2> Preview </h2> <img src={URL.createObjectURL(selectedImage)} alt="user-uploaded image" /> <h2> Result </h2> <img src={resultImage} alt="result image" /> </>)
         : null}
     </>
   )
