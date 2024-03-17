@@ -3,6 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "Bartosz Pilarski",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bartosz-Pilarski/img-resize-site-client.git"
+  },
+  "homepage": "https://github.com/Bartosz-Pilarski/img-resize-site-client#readme",
+  "bugs": {
+    "url": "https://github.com/Bartosz-Pilarski/img-resize-site-client/issues"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,6 +20,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

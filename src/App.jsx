@@ -1,33 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedImage, setSelectedImage] = useState(null)
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    const formData = new FormData()
+    formData.append("extension", "png")
+    formData.append("image", selectedImage)
+
+    axios
+      .post("http://localhost:3001/api/images", formData,  { headers: {'Content-Type': 'multipart/form-data'}})
+      .then(res => console.log(res.data))
+  }
+
+  const handleImageSelection = (event) => {
+    console.log(event.target.files[0])
+    setSelectedImage(event.target.files[0])
+  }
+
+  useEffect(() => {
+    const bytes = selectedImage ? selectedImage.size : 1024
+    console.log(Math.log(bytes), Math.log(1024))
+    console.log(Math.floor(Math.log(bytes)/Math.log(1024)))
+  }, [selectedImage])
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <form onSubmit={handleSubmit}>
+        <input type="file" name="image" onChange={(event) => handleImageSelection(event)} />
+        <button type="submit">Upload</button>
+      </form>
+      {selectedImage 
+        ? (<> <h2> Preview </h2> <img src={URL.createObjectURL(selectedImage)} alt="user-uploaded image" /> </>)
+        : null}
     </>
   )
 }
