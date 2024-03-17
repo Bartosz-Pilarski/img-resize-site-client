@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null)
@@ -21,12 +21,6 @@ function App() {
     setSelectedImage(event.target.files[0])
   }
 
-  useEffect(() => {
-    const bytes = selectedImage ? selectedImage.size : 1024
-    console.log(Math.log(bytes), Math.log(1024))
-    console.log(Math.floor(Math.log(bytes)/Math.log(1024)))
-  }, [selectedImage])
-
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -34,7 +28,7 @@ function App() {
         <button type="submit">Upload</button>
       </form>
       {selectedImage 
-        ? (<> <h2> Preview </h2> <img src={URL.createObjectURL(selectedImage)} alt="user-uploaded image" /> </>)
+        ? (<> <h2> Preview </h2> <img src={URL.createObjectURL(selectedImage)} alt="user-uploaded image" /> <h2> Result </h2> <img src="" alt="result image" /> </>)
         : null}
     </>
   )
