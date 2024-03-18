@@ -29,6 +29,7 @@ const useField = (type) => {
   return {
     type: adjustedType,
     value,
+    setValue,
     onChange,
     reset,
     setup

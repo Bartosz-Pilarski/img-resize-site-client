@@ -1,7 +1,11 @@
 const ImageFormExtension = ({ extensionName, extensionState, handleExtensionChange }) => {
+  //SVG is read-only
+  if(extensionName === 'svg') return null
+
   return(
     <>
       <input 
+        required
         type="radio" 
         name="extension" 
         id={`image-extension-${extensionName}`} 

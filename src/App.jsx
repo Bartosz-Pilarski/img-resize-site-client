@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useState } from "react"
 import ImageForm from "./components/ImageForm"
 
@@ -7,7 +6,6 @@ function App() {
   const [resultImage, setResultImage] = useState("/")
 
   const handleImageSelection = (event) => {
-    console.log(event.target.files[0])
     setSelectedImage(event.target.files[0])
   }
 

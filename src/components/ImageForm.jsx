@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { useField } from "../hooks"
 import { submitImage } from "../services/imageService"
 
 import ImageFormExtension from "./ImageFormExtension"
+import { getImageDimensionsFromURL } from "../utils/utils"
 
 const ImageForm = ({ selectedImage, setResultImage, handleImageSelection }) => {
   const width = useField('number')
@@ -31,10 +32,29 @@ const ImageForm = ({ selectedImage, setResultImage, handleImageSelection }) => {
     return formData
   }
 
-  const extensions = [
-    "png",
-    "jpg"
-  ]
+  const MIMEtoExtension = {
+    'image/webp': 'webp',
+    'image/avif': 'avif',
+    'image/gif': 'gif',
+    'image/jpeg': 'jpg',
+    'image/png': 'png',
+    'image/tiff': 'tiff',
+    //SVG is read-only
+    'image/svg+xml': 'svg'
+  }
+  const MIMEs = { accept: Object.keys(MIMEtoExtension) }
+
+  useEffect(() => {
+    if(!selectedImage) return
+
+    getImageDimensionsFromURL(URL.createObjectURL(selectedImage))
+    .then((dimensions) => {
+      width.setValue(dimensions.width)
+      height.setValue(dimensions.height)
+      setExtension(MIMEtoExtension[selectedImage.type])
+    })
+
+  }, [selectedImage])
 
   return (
     <form onSubmit={(event) => handleSubmit(event, getFormData())}>
@@ -42,14 +62,14 @@ const ImageForm = ({ selectedImage, setResultImage, handleImageSelection }) => {
       x
       <input required name="height" placeholder="height" {...height.setup} />
 
-      {extensions.map((extensionName) => <ImageFormExtension
+      {Object.values(MIMEtoExtension).map((extensionName) => <ImageFormExtension
         key={extensionName} 
         extensionName={extensionName}
         extensionState={extension}
         handleExtensionChange={handleExtensionChange}
       />)}
 
-      <input required type="file" name="image" onChange={(event) => handleImageSelection(event)} />
+      <input required type="file" name="image" {...MIMEs} onChange={(event) => handleImageSelection(event)} />
       
       <button type="submit">Upload</button>
     </form>
