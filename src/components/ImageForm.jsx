@@ -1,17 +1,34 @@
 import { useState } from "react"
 
 import { useField } from "../hooks"
+import { submitImage } from "../services/imageService"
 
 import ImageFormExtension from "./ImageFormExtension"
 
-const ImageForm = ({ handleSubmit, handleImageSelection }) => {
+const ImageForm = ({ selectedImage, setResultImage, handleImageSelection }) => {
   const width = useField('number')
   const height = useField('number')
-  const image = useField('file')
   const [extension, setExtension] = useState('png')
 
   const handleExtensionChange = (event) => {
     setExtension(event.target.value)
+  }
+
+  const handleSubmit = async (event, data) => {
+    event.preventDefault()
+    const submittedImage = await submitImage(data)
+    setResultImage(submittedImage)
+  }
+
+  const getFormData = () => {
+    const formData = new FormData()
+
+    formData.append("width", Number(width.value))
+    formData.append("height", Number(height.value))
+    formData.append("extension", extension)
+    formData.append("image", selectedImage)
+
+    return formData
   }
 
   const extensions = [
@@ -19,21 +36,8 @@ const ImageForm = ({ handleSubmit, handleImageSelection }) => {
     "jpg"
   ]
 
-  const getFormData = () => {
-    const formData = new FormData()
-
-    formData.append("width", width.value)
-    formData.append("height", height.value)
-    formData.append("extension", extension)
-
-    return formData
-  }
-
   return (
-    <form onSubmit={(event) => { 
-      event.preventDefault() 
-      handleSubmit(event, getFormData())
-      }}>
+    <form onSubmit={(event) => handleSubmit(event, getFormData())}>
       <input required placeholder="width" name="width" {...width.setup} />
       x
       <input required name="height" placeholder="height" {...height.setup} />
