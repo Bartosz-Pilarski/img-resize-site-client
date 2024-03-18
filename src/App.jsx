@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
+import ImageForm from "./components/ImageForm"
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null)
@@ -13,7 +14,7 @@ function App() {
     formData.append("image", selectedImage)
 
     axios
-      .post("http://localhost:3001/api/images", formData,  { headers: {'Content-Type': 'multipart/form-data'}})
+      .post("http://localhost:3001/api/images", formData,  { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(res => setResultImage(`http://localhost:3001/${res.data.url}`))
   }
 
@@ -24,10 +25,10 @@ function App() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input type="file" name="image" onChange={(event) => handleImageSelection(event)} />
-        <button type="submit">Upload</button>
-      </form>
+      <ImageForm
+        handleSubmit={handleSubmit}
+        handleImageSelection={handleImageSelection}
+      />
       {selectedImage 
         ? (<> <h2> Preview </h2> <img src={URL.createObjectURL(selectedImage)} alt="user-uploaded image" /> <h2> Result </h2> <img src={resultImage} alt="result image" /> </>)
         : null}
