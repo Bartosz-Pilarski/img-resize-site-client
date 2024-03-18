@@ -11,6 +11,18 @@ const getImageDimensionsFromURL = (ObjectURL) => new Promise(
   }
 )
 
+const MIMEtoExtension = {
+  'image/webp': 'webp',
+  'image/avif': 'avif',
+  'image/gif': 'gif',
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/tiff': 'tiff',
+  //SVG is read-only
+  'image/svg+xml': 'svg'
+}
+
 export {
-  getImageDimensionsFromURL
+  getImageDimensionsFromURL,
+  MIMEtoExtension
 }

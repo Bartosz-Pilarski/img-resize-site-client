@@ -4,12 +4,12 @@ import { useField } from "../hooks"
 import { submitImage } from "../services/imageService"
 
 import ImageFormExtension from "./ImageFormExtension"
-import { getImageDimensionsFromURL } from "../utils/utils"
+import { getImageDimensionsFromURL, MIMEtoExtension } from "../utils/utils"
 
 const ImageForm = ({ selectedImage, setResultImage, handleImageSelection }) => {
   const width = useField('number')
   const height = useField('number')
-  const [extension, setExtension] = useState('png')
+  const [extension, setExtension] = useState(null)
 
   const handleExtensionChange = (event) => {
     setExtension(event.target.value)
@@ -24,25 +24,13 @@ const ImageForm = ({ selectedImage, setResultImage, handleImageSelection }) => {
   const getFormData = () => {
     const formData = new FormData()
 
-    formData.append("width", Number(width.value))
-    formData.append("height", Number(height.value))
+    formData.append("width", width.value)
+    formData.append("height", height.value)
     formData.append("extension", extension)
     formData.append("image", selectedImage)
 
     return formData
   }
-
-  const MIMEtoExtension = {
-    'image/webp': 'webp',
-    'image/avif': 'avif',
-    'image/gif': 'gif',
-    'image/jpeg': 'jpg',
-    'image/png': 'png',
-    'image/tiff': 'tiff',
-    //SVG is read-only
-    'image/svg+xml': 'svg'
-  }
-  const MIMEs = { accept: Object.keys(MIMEtoExtension) }
 
   useEffect(() => {
     if(!selectedImage) return
@@ -51,11 +39,13 @@ const ImageForm = ({ selectedImage, setResultImage, handleImageSelection }) => {
     .then((dimensions) => {
       width.setValue(dimensions.width)
       height.setValue(dimensions.height)
-      setExtension(MIMEtoExtension[selectedImage.type])
+      setExtension(MIMEtoExtension[selectedImage.type] || null)
     })
 
   }, [selectedImage])
 
+  //Accepted filetypes for input field
+  const MIMEs = { accept: Object.keys(MIMEtoExtension) }
   return (
     <form onSubmit={(event) => handleSubmit(event, getFormData())}>
       <input required placeholder="width" name="width" {...width.setup} />

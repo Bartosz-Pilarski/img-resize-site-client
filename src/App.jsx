@@ -1,12 +1,15 @@
 import { useState } from "react"
 import ImageForm from "./components/ImageForm"
+import { MIMEtoExtension } from "./utils/utils"
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null)
   const [resultImage, setResultImage] = useState("/")
 
   const handleImageSelection = (event) => {
-    setSelectedImage(event.target.files[0])
+    const file = event.target.files[0]
+    if(!MIMEtoExtension[file.type]) return
+    setSelectedImage(file)
   }
 
   return (
