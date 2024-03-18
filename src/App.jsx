@@ -6,15 +6,12 @@ function App() {
   const [selectedImage, setSelectedImage] = useState(null)
   const [resultImage, setResultImage] = useState("/")
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, data) => {
     event.preventDefault()
-
-    const formData = new FormData()
-    formData.append("extension", "png")
-    formData.append("image", selectedImage)
-
+    console.log(data)
+    data.append("image", selectedImage)
     axios
-      .post("http://localhost:3001/api/images", formData,  { headers: { 'Content-Type': 'multipart/form-data' } })
+      .post("http://localhost:3001/api/images", data,  { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(res => setResultImage(`http://localhost:3001/${res.data.url}`))
   }
 
