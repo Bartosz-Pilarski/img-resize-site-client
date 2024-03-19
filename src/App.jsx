@@ -8,6 +8,9 @@ function App() {
 
   const handleImageSelection = (event) => {
     const file = event.target.files[0]
+    //Block files bigger than 50MB
+    if(file.size > 52428800) return
+    //Block files of incompatible formats
     if(!MIMEtoExtension[file.type]) return
     setSelectedImage(file)
   }
