@@ -25,15 +25,16 @@ const Index = () => {
   return (
     <div className='flex flex-col'>
       <Hero></Hero>
-      <Notification notification={notification} />
       <div className='flex flex-row max-md:flex-col justify-center mx-auto border-2 rounded-md border-emerald-700'>
         <ImageForm
           selectedImage={selectedImage}
           setResultImage={setResultImage}
+          setNotification={setNotification}
           handleImageSelection={handleImageSelection}
         />
         <ImagePreview selectedImage={selectedImage} />
       </div>
+      <Notification notification={notification} />
       <ImageResult resultImage={resultImage} />
 
     </div>

@@ -6,7 +6,7 @@ import { submitImage } from "../services/imageService"
 import ImageFormExtension from "./ImageFormExtension"
 import { getImageDimensionsFromURL, MIMEtoExtension } from "../utils/utils"
 
-const ImageForm = ({ selectedImage, setResultImage, handleImageSelection }) => {
+const ImageForm = ({ selectedImage, setResultImage, setNotification, handleImageSelection }) => {
   const width = useField('number')
   const height = useField('number')
   const [extension, setExtension] = useState(null)
@@ -18,7 +18,12 @@ const ImageForm = ({ selectedImage, setResultImage, handleImageSelection }) => {
   const handleSubmit = async (event, data) => {
     event.preventDefault()
     const submittedImage = await submitImage(data)
-    setResultImage(submittedImage)
+    if(submittedImage.isError) {
+      if(submittedImage.status === 500) return setNotification({ isError: true, content: 'Uploading image failed (internal server error)' })
+      return setNotification({ isError: true, content: 'Uploading image failed (bad request)'})
+    }
+    setNotification({isError: false, content: 'Image processed succesfully'})
+    setResultImage(submittedImage.url)
   }
 
   const getFormData = () => {
