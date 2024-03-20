@@ -1,6 +1,6 @@
 const Notification = ({ notification }) => {
   const { isError, content } = notification
-  
+
   if(content === null) return null
 
   const style = `

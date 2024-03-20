@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
-import { useField } from "../hooks"
-import { submitImage } from "../services/imageService"
+import { useField } from '../hooks'
+import { submitImage } from '../services/imageService'
 
-import ImageFormExtension from "./ImageFormExtension"
-import { getImageDimensionsFromURL, MIMEtoExtension } from "../utils/utils"
+import ImageFormExtension from './ImageFormExtension'
+import { getImageDimensionsFromURL, MIMEtoExtension } from '../utils/utils'
 
 const ImageForm = ({ selectedImage, setResultImage, setNotification, handleImageSelection }) => {
   const width = useField('number')
@@ -29,10 +29,10 @@ const ImageForm = ({ selectedImage, setResultImage, setNotification, handleImage
   const getFormData = () => {
     const formData = new FormData()
 
-    formData.append("width", width.value)
-    formData.append("height", height.value)
-    formData.append("extension", extension)
-    formData.append("image", selectedImage)
+    formData.append('width', width.value)
+    formData.append('height', height.value)
+    formData.append('extension', extension)
+    formData.append('image', selectedImage)
 
     return formData
   }
@@ -64,7 +64,7 @@ const ImageForm = ({ selectedImage, setResultImage, setNotification, handleImage
     pr-6
   `
   return (
-    <form 
+    <form
       className="
         flex flex-col
         space-y-2
@@ -74,24 +74,24 @@ const ImageForm = ({ selectedImage, setResultImage, setNotification, handleImage
       onSubmit={(event) => handleSubmit(event, getFormData())}
     >
       <div>
-        <h2 className={headerStyle+"bg-emerald-700"}>Upload your image:</h2>
-        <input 
+        <h2 className={headerStyle+'bg-emerald-700'}>Upload your image:</h2>
+        <input
           className="
-            block 
+            block
             m-4 mx-auto
             bg-slate-800 file:bg-slate-600
-            rounded-md file:rounded-md  
-            file:text-white 
-            file:px-2 file:py-1 
+            rounded-md file:rounded-md
+            file:text-white
+            file:px-2 file:py-1
             border-emerald-500 border-b-2 file:border-0
-            transition-all 
+            transition-all
             hover:shadow-md hover:shadow-emerald-500/50 hover:border-emerald-400 hover:cursor-pointer
             "
-          required 
-          type="file" 
-          name="image" 
-          {...MIMEs} 
-          onChange={(event) => handleImageSelection(event)} 
+          required
+          type="file"
+          name="image"
+          {...MIMEs}
+          onChange={(event) => handleImageSelection(event)}
         />
       </div>
       <div>
@@ -117,7 +117,7 @@ const ImageForm = ({ selectedImage, setResultImage, setNotification, handleImage
       <div>
         <h2 className={headerStyle}> Your desired filetype: </h2>
         {Object.values(MIMEtoExtension).map((extensionName) => <ImageFormExtension
-          key={extensionName} 
+          key={extensionName}
           extensionName={extensionName}
           extensionState={extension}
           handleExtensionChange={handleExtensionChange}
@@ -127,7 +127,7 @@ const ImageForm = ({ selectedImage, setResultImage, setNotification, handleImage
         <h2 className={headerStyle+'text-center'}> ...and resize!</h2>
         <button className="block border-emerald-600 border-b-2 rounded-md px-2 py-1 mb-2 mx-auto bg-slate-600 transition-all hover:shadow-md hover:shadow-emerald-500/50 hover:border-emerald-500" type="submit">Upload</button>
       </div>
-      
+
     </form>
   )
 }

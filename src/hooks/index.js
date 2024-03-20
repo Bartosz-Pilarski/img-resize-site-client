@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const useField = (type) => {
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState('')
   let regex
 
   //Validate if string is numbers only

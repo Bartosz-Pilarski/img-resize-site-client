@@ -11,12 +11,12 @@ const ImageFormExtension = ({ extensionName, extensionState, handleExtensionChan
           hover:cursor-pointer
         "
         required
-        type="radio" 
-        name="extension" 
-        id={`image-extension-${extensionName}`} 
-        value={extensionName} 
-        checked={ extensionState === extensionName } 
-        onChange={handleExtensionChange} 
+        type="radio"
+        name="extension"
+        id={`image-extension-${extensionName}`}
+        value={extensionName}
+        checked={ extensionState === extensionName }
+        onChange={handleExtensionChange}
       />
       <label htmlFor="image-extension-jpg">
         {`.${extensionName}`}

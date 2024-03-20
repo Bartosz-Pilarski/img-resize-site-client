@@ -1,4 +1,4 @@
-import Hero from "../layout/Hero"
+import Hero from '../layout/Hero'
 
 const About = () => {
   const baseParagraphStyle = `  
@@ -31,7 +31,7 @@ const About = () => {
           <h2 className={headerStyle}> <span className="text-emerald-500"> Free </span> online image resizing </h2>
           <div className={textblockStyle}>
             <p> SIZEdown offers free of charge, and ads, image resizing online. </p>
-            <p> We don't collect your images or data - anything you upload is wiped from the server within 15 minutes. </p>
+            <p> We don&apos;t collect your images or data - anything you upload is wiped from the server within 15 minutes. </p>
           </div>
         </div>
         <div className={oddParagraphStyle}>
@@ -50,7 +50,7 @@ const About = () => {
         </div>
       </div>
     </div>
-    
+
   )
 }
 

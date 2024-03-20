@@ -6,7 +6,7 @@ const Footer = () => {
       p-1
       text-right
       '>
-      <a href="https://github.com/Bartosz-Pilarski" target="_blank">Bartosz Pilarski &copy; 2024</a>
+      <a href="https://github.com/Bartosz-Pilarski" target="_blank" rel="noreferrer">Bartosz Pilarski &copy; 2024</a>
     </footer>
   )
 }
