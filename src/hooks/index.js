@@ -9,6 +9,7 @@ const useField = (type) => {
 
   const onChangeFactory = () => {
     if(type === 'number') return (event) => {
+      if(event.target.value === '') return setValue(event.target.value)
       regex.test(event.target.value)
         ? setValue(event.target.value)
         : false
