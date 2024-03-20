@@ -4,7 +4,12 @@ const ImageFormExtension = ({ extensionName, extensionState, handleExtensionChan
 
   return(
     <>
-      <input 
+      <input
+        className="
+          accent-emerald-500
+          mx-2
+          hover:cursor-pointer
+        "
         required
         type="radio" 
         name="extension" 

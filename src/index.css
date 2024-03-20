@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+.grid-bg {
+  background-size: 30px 30px;
+  background-image:
+    linear-gradient(to left, #121A26 1px, transparent 1px),
+    linear-gradient(to bottom, #121A26 1px, transparent 1px);
+}
